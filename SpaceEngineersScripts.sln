@@ -3,15 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeSupportManager", "OxyGenerator\LifeSupportManager.csproj", "{7EFF9516-B6A7-4C96-B6C7-9DDF45C3344B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandingAssistant", "LandingAssistant\LandingAssistant.csproj", "{D9B74988-FE8C-471F-A35A-74852F1EF452}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapeScanner", "ShapeScanner\ShapeScanner.csproj", "{5358FF9B-D0B3-4DFE-8F08-9B6943EDC5CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TacticalManager", "TacticalManager\TacticalManager.csproj", "{C85850B5-4179-49A7-BB04-3D79F2190C15}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{1E681544-41F6-4F11-A83D-59FCFE29211A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeSupportManagerMvc", "LifeSupportManagerMvc\LifeSupportManagerMvc.csproj", "{566A6735-A01F-4096-8B60-7080B6B3AFFF}"
 EndProject
@@ -20,16 +16,12 @@ Global
 		Debug|x64 = Debug|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7EFF9516-B6A7-4C96-B6C7-9DDF45C3344B}.Debug|x64.ActiveCfg = Debug|x64
-		{7EFF9516-B6A7-4C96-B6C7-9DDF45C3344B}.Debug|x64.Build.0 = Debug|x64
 		{D9B74988-FE8C-471F-A35A-74852F1EF452}.Debug|x64.ActiveCfg = Debug|x64
 		{D9B74988-FE8C-471F-A35A-74852F1EF452}.Debug|x64.Build.0 = Debug|x64
 		{5358FF9B-D0B3-4DFE-8F08-9B6943EDC5CD}.Debug|x64.ActiveCfg = Debug|x64
 		{5358FF9B-D0B3-4DFE-8F08-9B6943EDC5CD}.Debug|x64.Build.0 = Debug|x64
 		{C85850B5-4179-49A7-BB04-3D79F2190C15}.Debug|x64.ActiveCfg = Debug|x64
 		{C85850B5-4179-49A7-BB04-3D79F2190C15}.Debug|x64.Build.0 = Debug|x64
-		{1E681544-41F6-4F11-A83D-59FCFE29211A}.Debug|x64.ActiveCfg = Debug|x64
-		{1E681544-41F6-4F11-A83D-59FCFE29211A}.Debug|x64.Build.0 = Debug|x64
 		{566A6735-A01F-4096-8B60-7080B6B3AFFF}.Debug|x64.ActiveCfg = Debug|x64
 		{566A6735-A01F-4096-8B60-7080B6B3AFFF}.Debug|x64.Build.0 = Debug|x64
 	EndGlobalSection
