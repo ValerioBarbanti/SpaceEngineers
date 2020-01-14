@@ -27,11 +27,12 @@ namespace IngameScript {
             public const string T_LSM_AIRLOCK_AIRVENT = "[LSM Airlock Airvent]";
             public const string T_LSM_AIRLOCK_SCREEN = "[LSM Airlock Screen]";
             public const string T_LSM_AIRVENT_SCREEN = "[LSM Airvent Screen]";
+            public const string T_LSM_PROD_SCREEN = "[LSM Production Screen]";
 
             // COMMANDS
             public const string C_CYCLE = "cycle";
             public const string C_LEAK = "leak";
-            public const string C_SLIDE = "slide";
+            public const string C_SLIDE = "prod";
 
             // PARAMETERS
             public const string P_DEPRESSURIZE = "depressurize";
@@ -63,7 +64,8 @@ namespace IngameScript {
 
             // COLORS
             public static Color COLOR_BACKGROUND = new Color(27, 28, 33);
-            public static Color COLOR_BACKGROUND_MASK = new Color(65, 66, 77);
+            public static Color COLOR_BACKGROUND_MASK = new Color(37, 39, 45);
+            public static Color COLOR_BACKGROUND_LIGHT = new Color(67, 70, 81);
             public static Color COLOR_LOGO_PRIMARY = new Color(255, 217, 131);
             public static Color COLOR_LOGO_SECONDARY = new Color(132, 83, 47);
 

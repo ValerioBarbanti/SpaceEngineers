@@ -39,6 +39,7 @@ namespace IngameScript {
                             myProgram.leakController.AddCommandToStack(_commandLine);
                             break;
                         case Constants.C_SLIDE:
+                            myProgram.productionController.AddCommandToStack(_commandLine);
                             break;
                         default:
                             myProgram.Echo($"No valid command specified: {_commandLine.Argument(0)}");

@@ -29,7 +29,7 @@ namespace IngameScript {
         // Controllers
         AirlockController airlockController;
         LeakController leakController;
-        ProductionController oxygenController;
+        ProductionController productionController;
 
         public Program() {
             Runtime.UpdateFrequency = UpdateFrequency.Update1;
@@ -37,7 +37,7 @@ namespace IngameScript {
             commandRouter = new CommandRouter(this);
             airlockController =  new AirlockController(this);
             leakController = new LeakController(this);
-            oxygenController = new ProductionController(this);
+            productionController = new ProductionController(this);
             screenManager = new ScreenManager(this);
         }
 
@@ -47,10 +47,10 @@ namespace IngameScript {
 
         public void Main(string argument, UpdateType updateSource) {
             commandRouter.ParseCommand(argument);
-            //airlockController.AirlockRuntime();
-            //leakController.LeakRuntime();
-            oxygenController.OxygenRuntime();
-            //screenManager.ScreenRuntime();
+            airlockController.AirlockRuntime();
+            leakController.LeakRuntime();
+            productionController.OxygenRuntime();
+            screenManager.ScreenRuntime();
         }
     }
 }

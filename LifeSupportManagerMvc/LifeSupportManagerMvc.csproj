@@ -49,6 +49,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AdditionalFiles>
     <Compile Include="Model\Airlock.cs" />
+    <Compile Include="Model\LifeSupportInfo.cs" />
     <Compile Include="Program.cs" />
     <AdditionalFiles Include="Instructions.readme" />
     <AdditionalFiles Include="thumb.png" />
@@ -56,7 +57,11 @@
     <Compile Include="CommandRouter.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\Utils.cs" />
+    <Compile Include="View\AirlockScreen.cs" />
+    <Compile Include="View\LeakScreen.cs" />
+    <Compile Include="View\ProductionScreen.cs" />
     <Compile Include="View\ScreenManager.cs" />
+    <Compile Include="View\SplashScreen.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
