@@ -37,7 +37,9 @@ namespace IngameScript {
             }
 
             public void Init() {
-                Airlocks = new Dictionary<string, Airlock>();
+                if (null == Airlocks) {
+                    Airlocks = new Dictionary<string, Airlock>();
+                }
                 myProgram.GridTerminalSystem.GetBlockGroups(airlockGroups, group => group.Name.Contains("Airlock"));
                 if (airlockGroups.Count == 0) {
                     myProgram.Echo("Warning, there are no valid airlocks on your ship / station");

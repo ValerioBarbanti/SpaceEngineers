@@ -283,13 +283,16 @@ namespace IngameScript {
                 Vector2 ff_pos = new Vector2(256, 466);
                 Vector2 ff_size = new Vector2(492, 72);
                 MySprite footerFrame = MySprite.CreateSprite("SquareSimple", ff_pos, ff_size);
-                if (myProgram.leakController.Status.Equals(Constants.P_ON)) {
+                string statusText = "";
+                if (myProgram.isLeakManagementOn) {
                     footerFrame.Color = Constants.COLOR_GREEN;
+                    statusText = "ON";
                 } else {
                     footerFrame.Color = Constants.COLOR_RED;
+                    statusText = "OFF";
                 }
 
-                MySprite leakStatus = MySprite.CreateText($"Leak Prevention: {myProgram.leakController.Status.ToUpper()}", "Debug", Constants.COLOR_WHITE, 1.5f, TextAlignment.CENTER);
+                MySprite leakStatus = MySprite.CreateText($"Leak Prevention: {statusText}", "Debug", Constants.COLOR_WHITE, 1.5f, TextAlignment.CENTER);
                 leakStatus.Position = new Vector2(256, 442);
 
                 footerSpriteList.Add(pageFrame);

@@ -19,17 +19,18 @@ using VRageMath;
 
 namespace IngameScript {
     partial class Program {
-        public class Utils {
+        public class SemlParser {
 
-            public static bool IsListEmpty<T>(List<T> list) {
-                if (null == list || list.Count == 0) {
-                    return true;
-                }
-                return false;
+            List<string> SemlList { get; set; }
+            List<IMyTextPanel> Panels { get; set; }
+
+            public SemlParser(List<string> semlList, List<IMyTextPanel> panels) {
+                SemlList = semlList;
+                Panels = panels;
             }
 
-            public static float DegreeToRadian(float angle) {
-                return (float)(Math.PI * angle / 180.0);
+            public void DrawScreen() {
+
             }
 
         }

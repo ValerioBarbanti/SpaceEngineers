@@ -29,8 +29,6 @@ namespace IngameScript {
             public List<IMyDoor> Doors { get; set; }
             public List<IMyAirVent> Airvents { get; set; }
 
-            public string Status { get; set; }
-
             public LeakController(Program program) {
                 myProgram = program;
                 Init();
@@ -51,13 +49,15 @@ namespace IngameScript {
                         Doors.Add(door);
                     }
                 }
-                Status = Constants.P_ON;
+                myProgram.isLeakManagementOn = true;
             }
 
             public void AddCommandToStack(MyCommandLine _commandLine) {
                 if (null != _commandLine.Argument(1)) {
-                    if (_commandLine.Argument(1).Equals(Constants.P_ON) || _commandLine.Argument(1).Equals(Constants.P_OFF)) {
-                        Status = _commandLine.Argument(1);
+                    if (_commandLine.Argument(1).Equals(Constants.P_ON)) {
+                        myProgram.isLeakManagementOn = true;
+                    } else if (_commandLine.Argument(1).Equals(Constants.P_OFF)) {
+                        myProgram.isLeakManagementOn = false;
                     } else {
                         myProgram.Echo("No valid command\n");
                     }
@@ -65,7 +65,7 @@ namespace IngameScript {
             }
 
             public void LeakRuntime() {
-                if (Status.Equals(Constants.P_ON)) {
+                if (myProgram.isLeakManagementOn) {
                     CheckAndManageLeaks();
                 }
             }

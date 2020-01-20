@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapeScanner", "ShapeScanne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TacticalManager", "TacticalManager\TacticalManager.csproj", "{C85850B5-4179-49A7-BB04-3D79F2190C15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeSupportManagerMvc", "LifeSupportManagerMvc\LifeSupportManagerMvc.csproj", "{566A6735-A01F-4096-8B60-7080B6B3AFFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "[CUB3] Life Support Manager", "LifeSupportManagerMvc\[CUB3] Life Support Manager.csproj", "{566A6735-A01F-4096-8B60-7080B6B3AFFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurfaceDrawer", "SurfaceDrawer\SurfaceDrawer.csproj", "{632235B1-2FE9-4C97-A0B5-3DE65A87AB3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +26,8 @@ Global
 		{C85850B5-4179-49A7-BB04-3D79F2190C15}.Debug|x64.Build.0 = Debug|x64
 		{566A6735-A01F-4096-8B60-7080B6B3AFFF}.Debug|x64.ActiveCfg = Debug|x64
 		{566A6735-A01F-4096-8B60-7080B6B3AFFF}.Debug|x64.Build.0 = Debug|x64
+		{632235B1-2FE9-4C97-A0B5-3DE65A87AB3E}.Debug|x64.ActiveCfg = Debug|x64
+		{632235B1-2FE9-4C97-A0B5-3DE65A87AB3E}.Debug|x64.Build.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

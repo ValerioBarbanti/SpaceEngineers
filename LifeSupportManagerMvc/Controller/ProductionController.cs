@@ -23,8 +23,6 @@ namespace IngameScript {
 
             Program myProgram;
 
-            public bool AutomaticLifeSupport { get; set; }
-
             public LifeSupportInfo LifeSupportInfo { get; set; }
 
             List<IMyOxygenFarm> oxygenFarmList = new List<IMyOxygenFarm>();
@@ -43,7 +41,6 @@ namespace IngameScript {
 
             private void Init() {
                 LifeSupportInfo = new LifeSupportInfo();
-                AutomaticLifeSupport = true;
                 myProgram.GridTerminalSystem.GetBlocksOfType(oxygenFarmList);
                 myProgram.GridTerminalSystem.GetBlocksOfType(gasGeneratorList);
                 myProgram.GridTerminalSystem.GetBlocksOfType(gasTankListTemp);
@@ -65,9 +62,9 @@ namespace IngameScript {
             public void AddCommandToStack(MyCommandLine _commandLine) {
                 if (null != _commandLine.Argument(1)) {
                     if (_commandLine.Argument(1).Equals(Constants.P_ON)) {
-                        AutomaticLifeSupport = true;
+                        myProgram.isProductionOn = true;
                     } else if (_commandLine.Argument(1).Equals(Constants.P_OFF)) {
-                        AutomaticLifeSupport = false;
+                        myProgram.isProductionOn = false;
                     } else {
                         myProgram.Echo("No valid command\n");
                     }
@@ -90,41 +87,43 @@ namespace IngameScript {
 
             private void ManageGasProduction() {
 
-                if (AutomaticLifeSupport) {
-                    if (LifeSupportInfo.TotalOxygenInTanks > 70 && LifeSupportInfo.TotalHydrogenInTanks > 70) {
-                        foreach (IMyOxygenFarm farm in oxygenFarmList) {
-                            IMyFunctionalBlock farmTest = farm as IMyFunctionalBlock;
-                            farmTest.Enabled = false;
-                        }
-                        foreach (IMyGasGenerator generator in gasGeneratorList) {
-                            generator.Enabled = false;
-                        }
-                    } else if (LifeSupportInfo.TotalOxygenInTanks > 70 && LifeSupportInfo.TotalHydrogenInTanks < 30) {
-                        foreach (IMyOxygenFarm farm in oxygenFarmList) {
-                            IMyFunctionalBlock farmTest = farm as IMyFunctionalBlock;
-                            farmTest.Enabled = false;
-                        }
-                        foreach (IMyGasGenerator generator in gasGeneratorList) {
-                            generator.Enabled = true;
-                        }
-                    } else if (LifeSupportInfo.TotalOxygenInTanks < 30 && LifeSupportInfo.TotalHydrogenInTanks > 70) {
-                        foreach (IMyOxygenFarm farm in oxygenFarmList) {
-                            IMyFunctionalBlock farmTest = farm as IMyFunctionalBlock;
-                            farmTest.Enabled = true;
-                        }
-                        foreach (IMyGasGenerator generator in gasGeneratorList) {
-                            generator.Enabled = true;
-                        }
-                    } else if (LifeSupportInfo.TotalOxygenInTanks < 30 && LifeSupportInfo.TotalHydrogenInTanks < 30) {
-                        foreach (IMyOxygenFarm farm in oxygenFarmList) {
-                            IMyFunctionalBlock farmTest = farm as IMyFunctionalBlock;
-                            farmTest.Enabled = true;
-                        }
-                        foreach (IMyGasGenerator generator in gasGeneratorList) {
-                            generator.Enabled = true;
-                        }
+                if (myProgram.isProductionOn) {
+                    bool oxygenProduction = true;
+                    if (LifeSupportInfo.TotalOxygenInTanks > myProgram.maximumOxygenInTanks) {
+                        oxygenProduction = false;
+                    }
+                    if (LifeSupportInfo.TotalOxygenInTanks < myProgram.minimumOxygenInTanks) {
+                        oxygenProduction = true;
                     }
 
+                    bool hydrogenProduction = true;
+                    if (LifeSupportInfo.TotalHydrogenInTanks > myProgram.maximumHydrogenInTanks) {
+                        hydrogenProduction = false;
+                    }
+                    if (LifeSupportInfo.TotalOxygenInTanks < myProgram.minimumHydrogenInTanks) {
+                        hydrogenProduction = true;
+                    }
+
+                    if (oxygenProduction && hydrogenProduction) {
+                        ModifyProduction(true, true);
+                    } else if (!oxygenProduction && !hydrogenProduction) {
+                        ModifyProduction(false, false);
+                    } else if (oxygenProduction && !hydrogenProduction) {
+                        ModifyProduction(true, true);
+                    } else if (!oxygenProduction && hydrogenProduction) {
+                        ModifyProduction(false, true);
+                    }
+
+                }
+            }
+
+            private void ModifyProduction(bool farmEnabled, bool generatorEnabled) {
+                foreach (IMyOxygenFarm farm in oxygenFarmList) {
+                    IMyFunctionalBlock farmTest = farm as IMyFunctionalBlock;
+                    farmTest.Enabled = farmEnabled;
+                }
+                foreach (IMyGasGenerator generator in gasGeneratorList) {
+                    generator.Enabled = generatorEnabled;
                 }
             }
 
@@ -180,32 +179,6 @@ namespace IngameScript {
                 hydrogenFillPercentage = (hydrogenFillPercentage / tankCount) * 100;
                 myProgram.Echo($"Hydrogen: {hydrogenFillPercentage.ToString("0.0")}%");
                 return hydrogenFillPercentage;
-            }
-
-            
-
-            private void CalculateGasGeneratorProduction() {
-
-            }
-
-            private void AManageGasProduction() {
-                /*if (GasTankPercentage > 0.5) {
-                    foreach (IMyOxygenFarm farm in oxygenFarmList) {
-                        IMyFunctionalBlock farmTest = farm as IMyFunctionalBlock;
-                        farmTest.Enabled = false;
-                    }
-                    foreach (IMyGasGenerator generator in gasGeneratorList) {
-                        generator.Enabled = false;
-                    }
-                } else {
-                    foreach (IMyOxygenFarm farm in oxygenFarmList) {
-                        IMyFunctionalBlock farmTest = farm as IMyFunctionalBlock;
-                        farmTest.Enabled = true;
-                    }
-                    foreach (IMyGasGenerator generator in gasGeneratorList) {
-                        generator.Enabled = true;
-                    }
-                }*/
             }
 
         }

@@ -18,20 +18,19 @@ using VRage;
 using VRageMath;
 
 namespace IngameScript {
-    partial class Program {
-        public class Utils {
+    partial class Program : MyGridProgram {
+        
 
-            public static bool IsListEmpty<T>(List<T> list) {
-                if (null == list || list.Count == 0) {
-                    return true;
-                }
-                return false;
-            }
+        public Program() {
+            
+        }
 
-            public static float DegreeToRadian(float angle) {
-                return (float)(Math.PI * angle / 180.0);
-            }
+        public void Save() {
+            
+        }
 
+        public void Main(string argument, UpdateType updateSource) {
+            
         }
     }
 }

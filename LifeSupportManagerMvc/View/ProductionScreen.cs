@@ -86,15 +86,15 @@ namespace IngameScript {
             }
 
             private void DrawHeader(List<MySprite> headerSpriteList, float screenOffset) {
-                Color color = (myProgram.productionController.AutomaticLifeSupport) ? Constants.COLOR_GREEN : Constants.COLOR_RED;
+                Color color = (myProgram.isProductionOn) ? Constants.COLOR_GREEN : Constants.COLOR_RED;
 
                 Vector2 b_pos = new Vector2(256 + screenOffset, 34);
                 Vector2 b_size = new Vector2(492, 48);
                 var background = MySprite.CreateSprite("SquareSimple", b_pos, b_size);
                 background.Color = color;
 
-                string text = (myProgram.productionController.AutomaticLifeSupport) ? "ON" : "OFF";
-                var headerText = MySprite.CreateText($"AUTO O2 PRODUCTION: {text}", "Debug", Constants.COLOR_WHITE, 1.5f, TextAlignment.CENTER);
+                string text = (myProgram.isProductionOn) ? "ON" : "OFF";
+                var headerText = MySprite.CreateText($"AUTO O2 PRODUCTION: {text}", "White", Constants.COLOR_WHITE, 1.5f, TextAlignment.CENTER);
                 headerText.Position = new Vector2(256 + screenOffset, 10);
 
 
@@ -113,7 +113,7 @@ namespace IngameScript {
                 var header = MySprite.CreateSprite("SquareSimple", h_pos, h_size);
                 header.Color = Constants.COLOR_GREEN;
 
-                var headerText = MySprite.CreateText("PRODUCTION INFO", "Debug", Constants.COLOR_WHITE, 0.6f, TextAlignment.LEFT);
+                var headerText = MySprite.CreateText("PRODUCTION INFO", "White", Constants.COLOR_WHITE, 0.6f, TextAlignment.LEFT);
                 headerText.Position = new Vector2(20 + screenOffset, 69);
 
                 Vector2 gb_pos = new Vector2(130.5f + screenOffset, 116.5f);
@@ -136,10 +136,10 @@ namespace IngameScript {
                 var oxygenFarmSwitch = MySprite.CreateSprite("SquareSimple", ofs_pos, ofs_size);
                 oxygenFarmSwitch.Color = myProgram.productionController.LifeSupportInfo.IsOxygenFarmWorking ? Constants.COLOR_GREEN : Constants.COLOR_RED;
 
-                var generatorsSwitchText = MySprite.CreateText($"H2/O2 GENERATORS\n{myProgram.productionController.WorkingGenerators}", "Debug", Constants.COLOR_WHITE, 0.6f, TextAlignment.LEFT);
+                var generatorsSwitchText = MySprite.CreateText($"H2/O2 GENERATORS\n{myProgram.productionController.WorkingGenerators}", "White", Constants.COLOR_WHITE, 0.6f, TextAlignment.LEFT);
                 generatorsSwitchText.Position = new Vector2(47 + screenOffset, 98.5f);
 
-                var oxygenFarmSwitchText = MySprite.CreateText($"OXYGEN FARMS\n{myProgram.productionController.WorkingOxygenFarms}", "Debug", Constants.COLOR_WHITE, 0.6f, TextAlignment.LEFT);
+                var oxygenFarmSwitchText = MySprite.CreateText($"OXYGEN FARMS\n{myProgram.productionController.WorkingOxygenFarms}", "White", Constants.COLOR_WHITE, 0.6f, TextAlignment.LEFT);
                 oxygenFarmSwitchText.Position = new Vector2(47 + screenOffset, 145.5f);
 
                 productionSpriteList.Add(background);
@@ -164,7 +164,7 @@ namespace IngameScript {
                 var header = MySprite.CreateSprite("SquareSimple", h_pos, h_size);
                 header.Color = Constants.COLOR_GREEN;
 
-                var headerText = MySprite.CreateText("GAS TANKS", "Debug", Constants.COLOR_WHITE, 0.6f, TextAlignment.LEFT);
+                var headerText = MySprite.CreateText("GAS TANKS", "White", Constants.COLOR_WHITE, 0.6f, TextAlignment.LEFT);
                 headerText.Position = new Vector2(20 + screenOffset, 203);
 
                 // OXYGEN TANK
@@ -193,10 +193,10 @@ namespace IngameScript {
                 var oxygenFrameBar = MySprite.CreateSprite("SquareSimple", ofb_pos, ofb_size);
                 oxygenFrameBar.Color = oxygenColor;
 
-                var oxygenBarText = MySprite.CreateText("100%", "Debug", Constants.COLOR_WHITE, 0.5f, TextAlignment.CENTER);
+                var oxygenBarText = MySprite.CreateText($"{myProgram.productionController.LifeSupportInfo.ReadableOxygenInTanks}", "White", Constants.COLOR_WHITE, 0.5f, TextAlignment.CENTER);
                 oxygenBarText.Position = new Vector2(47 + screenOffset, oxygenBarPosY - (oxygenBarHeight / 2) - 15);
 
-                var oxygenBarTitle = MySprite.CreateText("O\nX\nY\nG\nE\nN\n\nT\nA\nN\nK\nS", "Debug", Constants.COLOR_WHITE, 0.5f, TextAlignment.CENTER);
+                var oxygenBarTitle = MySprite.CreateText("O\nX\nY\nG\nE\nN\n\nT\nA\nN\nK\nS", "White", Constants.COLOR_WHITE, 0.5f, TextAlignment.CENTER);
                 oxygenBarTitle.Position = new Vector2(82 + screenOffset, 230);
 
                 // HYDROGEN TANK
@@ -225,10 +225,10 @@ namespace IngameScript {
                 var hydrogenFrameBar = MySprite.CreateSprite("SquareSimple", hfb_pos, hfb_size);
                 hydrogenFrameBar.Color = hydrogenColor;
 
-                var hydrogenBarText = MySprite.CreateText($"{myProgram.productionController.LifeSupportInfo.ReadableHydrogenInTanks}", "Debug", Constants.COLOR_WHITE, 0.5f, TextAlignment.CENTER);
+                var hydrogenBarText = MySprite.CreateText($"{myProgram.productionController.LifeSupportInfo.ReadableHydrogenInTanks}", "White", Constants.COLOR_WHITE, 0.5f, TextAlignment.CENTER);
                 hydrogenBarText.Position = new Vector2(157 + screenOffset, hydrogenBarPosY - (hydrogenBarHeight / 2) - 15);
 
-                var hydrogenBarTitle = MySprite.CreateText("H\nY\nD\nR\nO\nG\nE\nN\n\nT\nA\nN\nK\nS", "Debug", Constants.COLOR_WHITE, 0.5f, TextAlignment.CENTER);
+                var hydrogenBarTitle = MySprite.CreateText("H\nY\nD\nR\nO\nG\nE\nN\n\nT\nA\nN\nK\nS", "White", Constants.COLOR_WHITE, 0.5f, TextAlignment.CENTER);
                 hydrogenBarTitle.Position = new Vector2(192 + screenOffset, 230);
 
                 gasTanksSpriteList.Add(background);
@@ -257,7 +257,7 @@ namespace IngameScript {
                 var header = MySprite.CreateSprite("SquareSimple", h_pos, h_size);
                 header.Color = Constants.COLOR_GREEN;
 
-                var headerText = MySprite.CreateText("AIRLOCKS STATUS", "Debug", Constants.COLOR_WHITE, 0.6f, TextAlignment.LEFT);
+                var headerText = MySprite.CreateText("AIRLOCKS STATUS", "White", Constants.COLOR_WHITE, 0.6f, TextAlignment.LEFT);
                 headerText.Position = new Vector2(271 + screenOffset, 69);
 
                 airlocksSpriteList.Add(background);
@@ -291,19 +291,19 @@ namespace IngameScript {
                     var airlockStatusIndicator = MySprite.CreateSprite("SquareSimple", asi_pos, asi_size);
                     airlockStatusIndicator.Color = airlockStatusColor;
 
-                    var airlockName = MySprite.CreateText(airlock.Name, "Debug", Constants.COLOR_WHITE, 1f, TextAlignment.LEFT);
+                    var airlockName = MySprite.CreateText(airlock.Name, "White", Constants.COLOR_WHITE, 1f, TextAlignment.LEFT);
                     airlockName.Position = new Vector2(288f + screenOffset, 100 + (offset * counter));
 
-                    var airlockStatusTitle = MySprite.CreateText("STATUS", "Debug", Constants.COLOR_WHITE, 0.6f, TextAlignment.LEFT);
+                    var airlockStatusTitle = MySprite.CreateText("STATUS", "White", Constants.COLOR_WHITE, 0.6f, TextAlignment.LEFT);
                     airlockStatusTitle.Position = new Vector2(288f + screenOffset, 128 + (offset * counter));
 
-                    var airlockStatus = MySprite.CreateText(airlock.PublicStatus, "Debug", Constants.COLOR_WHITE, 0.6f, TextAlignment.RIGHT);
+                    var airlockStatus = MySprite.CreateText(airlock.PublicStatus, "White", Constants.COLOR_WHITE, 0.6f, TextAlignment.RIGHT);
                     airlockStatus.Position = new Vector2(480f + screenOffset, 128 + (offset * counter));
 
-                    var airlockDoorStatusTitle = MySprite.CreateText("DOORS", "Debug", Constants.COLOR_WHITE, 0.6f, TextAlignment.LEFT);
+                    var airlockDoorStatusTitle = MySprite.CreateText("DOORS", "White", Constants.COLOR_WHITE, 0.6f, TextAlignment.LEFT);
                     airlockDoorStatusTitle.Position = new Vector2(288.5f + screenOffset, 145 + (offset * counter));
 
-                    var airlockDoorStatus = MySprite.CreateText(airlock.OpenDoors, "Debug", Constants.COLOR_WHITE, 0.6f, TextAlignment.RIGHT);
+                    var airlockDoorStatus = MySprite.CreateText(airlock.OpenDoors, "White", Constants.COLOR_WHITE, 0.6f, TextAlignment.RIGHT);
                     airlockDoorStatus.Position = new Vector2(480f + screenOffset, 145 + (offset * counter));
 
                     airlocksSpriteList.Add(airlockBackground);

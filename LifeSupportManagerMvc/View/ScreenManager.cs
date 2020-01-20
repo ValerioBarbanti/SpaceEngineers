@@ -93,14 +93,14 @@ namespace IngameScript {
                 }
 
                 splashScreen = new SplashScreen(this, ScriptPanels);
-                airlockScreen = new AirlockScreen(this, AirlockPanels);
+                airlockScreen = new AirlockScreen(this, AirlockPanels, myProgram);
                 leakScreen = new LeakScreen(myProgram, this, LeakPanels, DoublePanels, myProgram.leakController.Airvents);
                 productionScreen = new ProductionScreen(myProgram, this, ProductionPanels, DoublePanels);
             }
 
             public void ScreenRuntime() {
                 tick++;
-                if (tick < 10) {
+                if (tick < 200) {
                     splashScreen.GenerateScreen();
                 } else {
                     airlockScreen.GenerateScreen(myProgram.airlockController.Airlocks);

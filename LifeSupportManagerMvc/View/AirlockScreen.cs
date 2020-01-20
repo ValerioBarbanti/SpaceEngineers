@@ -21,18 +21,22 @@ namespace IngameScript {
     partial class Program {
         public class AirlockScreen {
 
+            Program myProgram;
+
             List<IMyTextPanel> Panels;
             ScreenManager ScreenManager;
 
-            public AirlockScreen(ScreenManager sManager, List<IMyTextPanel> panels) {
+            public AirlockScreen(ScreenManager sManager, List<IMyTextPanel> panels, Program program) {
                 ScreenManager = sManager;
                 Panels = panels;
+                myProgram = program;
             }
 
             public void GenerateScreen(Dictionary<string, Airlock> airlocks) {
                 foreach (IMyTextPanel panel in Panels) {
                     foreach (KeyValuePair<string, Airlock> _al in airlocks) {
                         Airlock airlock = _al.Value;
+
                         using (var frame = panel.DrawFrame()) {
 
                             List<MySprite> backgroundSpriteList = new List<MySprite>();
@@ -68,7 +72,7 @@ namespace IngameScript {
                 }
             }
 
-            private static void DrawBackground(Airlock airlock, List<MySprite> backgroundSpriteList) {
+            private void DrawBackground(Airlock airlock, List<MySprite> backgroundSpriteList) {
                 Vector2 b_pos = new Vector2(256, 256);
                 Vector2 b_size = new Vector2(512, 512);
                 var background = MySprite.CreateSprite("SquareSimple", b_pos, b_size);
@@ -90,7 +94,7 @@ namespace IngameScript {
 
             }
 
-            private static void DrawPressureInfo(Airlock airlock, List<MySprite> pressureInfoSpriteList) {
+            private void DrawPressureInfo(Airlock airlock, List<MySprite> pressureInfoSpriteList) {
                 Color contrastColor = new Color();
                 if (airlock.RoomPressure.Equals("High Pressure")) {
                     contrastColor = Constants.COLOR_GREEN;
