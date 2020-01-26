@@ -23,20 +23,21 @@ namespace IngameScript {
 
             Program myProgram;
 
-            List<IMyTextPanel> Panels;
+            
             ScreenManager ScreenManager;
 
-            public AirlockScreen(ScreenManager sManager, List<IMyTextPanel> panels, Program program) {
+            public AirlockScreen(ScreenManager sManager, Program program) {
                 ScreenManager = sManager;
-                Panels = panels;
+                
                 myProgram = program;
             }
 
             public void GenerateScreen(Dictionary<string, Airlock> airlocks) {
-                foreach (IMyTextPanel panel in Panels) {
-                    foreach (KeyValuePair<string, Airlock> _al in airlocks) {
-                        Airlock airlock = _al.Value;
+                
+                foreach (KeyValuePair<string, Airlock> _al in airlocks) {
+                    Airlock airlock = _al.Value;
 
+                    foreach (IMyTextPanel panel in airlock.Panels) {
                         using (var frame = panel.DrawFrame()) {
 
                             List<MySprite> backgroundSpriteList = new List<MySprite>();

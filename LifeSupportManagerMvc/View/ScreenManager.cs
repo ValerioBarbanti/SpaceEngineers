@@ -93,7 +93,7 @@ namespace IngameScript {
                 }
 
                 splashScreen = new SplashScreen(this, ScriptPanels);
-                airlockScreen = new AirlockScreen(this, AirlockPanels, myProgram);
+                airlockScreen = new AirlockScreen(this, myProgram);
                 leakScreen = new LeakScreen(myProgram, this, LeakPanels, DoublePanels, myProgram.leakController.Airvents);
                 productionScreen = new ProductionScreen(myProgram, this, ProductionPanels, DoublePanels);
             }

@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "[CUB3] Life Support Manager
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurfaceDrawer", "SurfaceDrawer\SurfaceDrawer.csproj", "{632235B1-2FE9-4C97-A0B5-3DE65A87AB3E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "[CUB3] Engineering Manager", "[CUB3] Engineering Manager\[CUB3] Engineering Manager.csproj", "{285233E2-6C3E-4D38-81C6-098803941012}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "[CUB3] Hangar Manager", "[CUB3] Hangar Manager\[CUB3] Hangar Manager.csproj", "{EE49F671-B1ED-4B3F-9F14-630DC4DE962B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -28,6 +32,10 @@ Global
 		{566A6735-A01F-4096-8B60-7080B6B3AFFF}.Debug|x64.Build.0 = Debug|x64
 		{632235B1-2FE9-4C97-A0B5-3DE65A87AB3E}.Debug|x64.ActiveCfg = Debug|x64
 		{632235B1-2FE9-4C97-A0B5-3DE65A87AB3E}.Debug|x64.Build.0 = Debug|x64
+		{285233E2-6C3E-4D38-81C6-098803941012}.Debug|x64.ActiveCfg = Debug|x64
+		{285233E2-6C3E-4D38-81C6-098803941012}.Debug|x64.Build.0 = Debug|x64
+		{EE49F671-B1ED-4B3F-9F14-630DC4DE962B}.Debug|x64.ActiveCfg = Debug|x64
+		{EE49F671-B1ED-4B3F-9F14-630DC4DE962B}.Debug|x64.Build.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
