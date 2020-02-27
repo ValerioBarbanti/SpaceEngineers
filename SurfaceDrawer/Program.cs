@@ -27,11 +27,11 @@ namespace IngameScript {
 
 
         public Program() {
+            Runtime.UpdateFrequency = UpdateFrequency.Update10;
             GridTerminalSystem.GetBlocks(blocks);
             foreach (IMyTerminalBlock block in blocks) {
                 IMyTextSurfaceProvider surfaceProvider = block as IMyTextSurfaceProvider;
                 if (null != surfaceProvider) {
-                    Echo($"Block: {block.CustomName}, {surfaceProvider.SurfaceCount}");
                     surfaceProviders.Add(surfaceProvider);
                 }
             }
@@ -53,7 +53,6 @@ namespace IngameScript {
 
         public void Main(string argument, UpdateType updateSource) {
             foreach (IMyTextSurface surface in surfaces) {
-                Echo($"Surface: {surface.SurfaceSize}");
 
                 RectangleF _viewport = new RectangleF(
                     (surface.TextureSize - surface.SurfaceSize) / 2f,
@@ -66,41 +65,54 @@ namespace IngameScript {
             }
         }
 
-        public void DrawSprites(ref MySpriteDrawFrame frame, RectangleF viewport) {
+        public void DrawSprites(ref MySpriteDrawFrame frame, RectangleF _viewport) {
 
-            // Set up the initial position - and remember to add our viewport offset
-            var position = new Vector2(256, 20) + viewport.Position;
+            var background = MySprite.CreateSprite("SquareSimple", _viewport.Center, _viewport.Size);
+            background.Color = new Color(26, 28, 32);
+            frame.Add(background);
 
-            // Create our first line
-            var sprite = new MySprite() {
-                Type = SpriteType.TEXT,
-                Data = "Line 1",
-                Position = position,
-                RotationOrScale = 0.8f /* 80 % of the font's default size */,
-                Color = Color.Red,
-                Alignment = TextAlignment.CENTER /* Center the text on the position */,
-                FontId = "White"
-            };
-            // Add the sprite to the frame
-            frame.Add(sprite);
+            Vector2 ocSize = percentageSize(80, _viewport);
+            var outerCircle = MySprite.CreateSprite("Circle", _viewport.Center, ocSize);
+            outerCircle.Color = new Color(29, 229, 128);
+            frame.Add(outerCircle);
 
-            // Move our position 20 pixels down in the viewport for the next line
-            position += new Vector2(0, 20);
+            Vector2 icSize = percentageSize(60, _viewport);
+            var innerCircle = MySprite.CreateSprite("Circle", _viewport.Center, icSize);
+            innerCircle.Color = new Color(37, 39, 45);
+            frame.Add(innerCircle);
 
-            // Create our second line, we'll just reuse our previous sprite variable - this is not necessary, just
-            // a simplification in this case.
-            sprite = sprite = new MySprite() {
-                Type = SpriteType.TEXT,
-                Data = "Line 1",
-                Position = position,
-                RotationOrScale = 0.8f,
-                Color = Color.Blue,
-                Alignment = TextAlignment.CENTER,
-                FontId = "White"
-            };
-            // Add the sprite to the frame
-            frame.Add(sprite);
+            float size = TextSize(40, _viewport);
+            float offset = TextSizeOffset(size);
+            var platformCode = MySprite.CreateText("01", "White", Color.White, size, TextAlignment.CENTER);
+            // Vector2 pcPos = new Vector2(_viewport.Center.X, _viewport.Center.Y - 100);
+            Vector2 pcPos = new Vector2(_viewport.Size.X/2, _viewport.Size.Y/2-offset) + _viewport.Position;
+            platformCode.Position = pcPos;
+            frame.Add(platformCode);
 
+        }
+
+        private Vector2 percentageSize(float percentage, RectangleF _viewport) {
+            if (_viewport.Size.X <= _viewport.Size.Y) {
+                return new Vector2(_viewport.Size.X * (percentage / 100), _viewport.Size.X * (percentage / 100));
+            } else {
+                return new Vector2(_viewport.Size.Y * (percentage / 100), _viewport.Size.Y * (percentage / 100));
+            }
+        }
+
+        private float TextSize(float percentage, RectangleF _viewport) {
+            if (_viewport.Size.X <= _viewport.Size.Y) {
+                return percentage / (24 / _viewport.Size.X * 100);
+            } else {
+                return percentage / (24 / _viewport.Size.Y * 100);
+            }
+        }
+
+        private float TextSizeOffset(float size) {
+            float emptySpace = 7 * size;
+            float fontSpace = ((24-7) * size);
+            float remainingSpace = emptySpace + (fontSpace / 2);
+            Echo($"Empty Space: {emptySpace}, {fontSpace}");
+            return remainingSpace;
         }
     }
 }

@@ -23,13 +23,19 @@ namespace IngameScript {
 
             // Generic
             Program myProgram;
+            public enum PlatformCategory { Sensor = 0, Connector = 1, Full = 2, None = 3 }
+            public enum PlatformType { Hangar = 0, LandingPad = 1 }
             public enum PlatformStatus { Clear = 0, Requested = 1, Obstructed = 2, Occupied = 3 };
-            public enum PlatformType { Sensor = 0, Connector = 1, Both = 2, None = 3 }
 
             // Stats
             public string Name { get; set; }
-            public PlatformStatus Status { get; set; }
+            public string Code { get; set; }
+            public PlatformCategory Category { get; set; }
             public PlatformType Type { get; set; }
+            public PlatformStatus Status { get; set; }
+            public bool Sanctionable { get; set; }
+            public bool Assigned { get; set; }
+            public bool Valid { get; set; }
 
             // Blocks
             public List<IMySensorBlock> Sensors { get; set; }
@@ -48,7 +54,8 @@ namespace IngameScript {
             public List<string> Errors { get; set; }
             public List<string> Warnings { get; set; }
 
-            List<MyDetectedEntityInfo> Entities { get; set; }
+            // Entities
+            public List<MyDetectedEntityInfo> Entities { get; set; }
 
             long firstEntityDetection;
 
@@ -59,9 +66,17 @@ namespace IngameScript {
                 Status = PlatformStatus.Clear;
 
                 InitPlatformBlocks(blockGroup);
+
+                DetectPlatformCategory();
                 DetectPlatformType();
-                InitSensors();
-                InitTurrets();
+                DetectPlatformDefense();
+
+                IsPlatformValid();
+
+                if (Valid) {
+                    InitSensors();
+                    InitTurrets();
+                }
             }
 
             private void InitPlatformBlocks(IMyBlockGroup blockGroup) {
@@ -82,23 +97,54 @@ namespace IngameScript {
                 Entities = new List<MyDetectedEntityInfo>();
             }
 
-            private void DetectPlatformType() {
-                myProgram.Echo($"{Name} - sensors: {Sensors.Count}");
-                myProgram.Echo($"{Name} - connectors: {Connectors.Count}");
-                if (!Utils.IsListEmpty(Sensors) && Utils.IsListEmpty(Connectors)) {
-                    Type = PlatformType.Sensor;
-                } else if (Utils.IsListEmpty(Sensors) && !Utils.IsListEmpty(Connectors)) {
-                    Type = PlatformType.Connector;
-                } else if (!Utils.IsListEmpty(Sensors) && !Utils.IsListEmpty(Connectors)) {
-                    Type = PlatformType.Both;
-                } else {
-                    Type = PlatformType.None;
+            private void DetectPlatformCategory() {
+                bool isSensor = false;
+                bool isConnector = false;
+
+                if (!Utils.IsListEmpty(Sensors)) {
+                    isSensor = true;
                 }
-                myProgram.Echo($"{Name} is of type: {Type}");
+                if (!Utils.IsListEmpty(Sensors)) {
+                    isConnector = true;
+                }
+
+                if (isSensor && isConnector) {
+                    Category = PlatformCategory.Full;
+                } else if (isSensor && !isConnector) {
+                    Category = PlatformCategory.Sensor;
+                } else if (!isSensor && isConnector) {
+                    Category = PlatformCategory.Connector;
+                } else {
+                    Category = PlatformCategory.None;
+                }
+            }
+
+            private void DetectPlatformType() {
+                if (!Utils.IsListEmpty(Doors)) {
+                    Type = PlatformType.Hangar;
+                } else {
+                    Type = PlatformType.LandingPad;
+                }
+            }
+
+            private void DetectPlatformDefense() {
+                if (!Utils.IsListEmpty(Turrets)) {
+                    Sanctionable = true;
+                } else {
+                    Sanctionable = false;
+                }
+            }
+
+            public void IsPlatformValid() {
+                if (Category.Equals(PlatformCategory.None)) {
+                    Valid = false;
+                } else {
+                    Valid = true;
+                }
             }
 
             private void InitSensors() {
-                if (Type.Equals(PlatformType.Sensor) || Type.Equals(PlatformType.Both)) {
+                if (Category.Equals(PlatformCategory.Sensor) || Type.Equals(PlatformCategory.Full)) {
                     foreach (IMySensorBlock sensor in Sensors) {
                         sensor.DetectPlayers = true;
                         sensor.DetectFloatingObjects = true;
@@ -116,53 +162,10 @@ namespace IngameScript {
             }
 
             private void InitTurrets() {
-                foreach (IMyLargeTurretBase turret in Turrets) {
-                    turret.Enabled = false;
-                }
-            }
-
-            public bool IsPlatformValid() {
-                if (Type.Equals(PlatformType.None)) {
-                    return false;
-                }
-                return true;
-            }
-
-            public void CheckStatus() {
-                bool areSensorsDetecting = false;
-                bool isConnectorDetecting = false;
-                bool isConnectorConnected = false;
-
-                if (!Utils.IsListEmpty(Sensors)) {
-                    foreach (IMySensorBlock sensor in Sensors) {
-                        if (sensor.IsActive) {
-                            areSensorsDetecting = true;
-                            sensor.DetectedEntities(Entities);
-                            foreach(MyDetectedEntityInfo entity in Entities) {
-                                myProgram.Echo($"Entity: {entity.Relationship}");
-                            }
-                        }
+                if (Sanctionable) {
+                    foreach (IMyLargeTurretBase turret in Turrets) {
+                        turret.Enabled = false;
                     }
-                }
-
-                if (!Utils.IsListEmpty(Connectors)) {
-                    foreach (IMyShipConnector connector in Connectors) {
-                        if (connector.Status.Equals(MyShipConnectorStatus.Connectable)) {
-                            isConnectorDetecting = true;
-                        }
-                        if (connector.Status.Equals(MyShipConnectorStatus.Connected)) {
-                            isConnectorConnected = true;
-                        }
-                    }
-                }
-
-                if (isConnectorConnected) {
-                    Status = PlatformStatus.Occupied;
-                } else if (areSensorsDetecting || isConnectorDetecting) {
-                    Status = PlatformStatus.Obstructed;
-                } else {
-                    Status = PlatformStatus.Clear;
-                    firstEntityDetection = 0;
                 }
             }
 
